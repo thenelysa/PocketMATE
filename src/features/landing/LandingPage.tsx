@@ -67,7 +67,7 @@ export function LandingPage() {
             <div className="relative">
               <div className="bg-white rounded-2xl shadow-2xl p-4 border border-[#D5ECEB]">
                 <img
-                  src="/images/mascot-spend-smart.png"
+                  src="/images/mascot-n'.png"
                   alt="PocketMATE Mascot"
                   className="w-full rounded-lg"
                   onError={(e) => {
