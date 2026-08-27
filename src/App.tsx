@@ -12,6 +12,8 @@ import { BillsPage } from '@/features/bills/pages/BillsPage';
 import { CreditCardsPage } from '@/features/cards/pages/CreditCardsPage';
 import { LandingPage } from '@/features/landing/LandingPage';
 import { RemindersPage } from '@/features/reminders/pages/RemindersPage';
+import { ReportsPage } from '@/features/reports/pages/ReportsPage';
+import { SettingsPage } from '@/features/settings/pages/SettingsPage';
 
 // Placeholder pages for routes that need implementation
 function PlaceholderPage({ title }: { title: string }) {
@@ -106,8 +108,8 @@ function AppRoutes() {
         <Route path="bills" element={<BillsPage />} />
         <Route path="cards" element={<CreditCardsPage />} />
         <Route path="reminders" element={<RemindersPage />} />
-        <Route path="reports" element={<PlaceholderPage title="Reports" />} />
-        <Route path="settings" element={<PlaceholderPage title="Settings" />} />
+        <Route path="reports" element={<ReportsPage />} />
+        <Route path="settings" element={<SettingsPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
