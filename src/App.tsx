@@ -12,6 +12,18 @@ import { BillsPage } from '@/features/bills/pages/BillsPage';
 import { CreditCardsPage } from '@/features/cards/pages/CreditCardsPage';
 import { LandingPage } from '@/features/landing/LandingPage';
 
+// Placeholder pages for routes that need implementation
+function PlaceholderPage({ title }: { title: string }) {
+  return (
+    <div className="min-h-screen bg-[#F7F8F5] flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-2xl font-bold text-[#071936] mb-4">{title}</h1>
+        <p className="text-[#4B5D7A]">This page is being implemented.</p>
+      </div>
+    </div>
+  );
+}
+
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -92,6 +104,9 @@ function AppRoutes() {
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="bills" element={<BillsPage />} />
         <Route path="cards" element={<CreditCardsPage />} />
+        <Route path="reminders" element={<PlaceholderPage title="Reminders" />} />
+        <Route path="reports" element={<PlaceholderPage title="Reports" />} />
+        <Route path="settings" element={<PlaceholderPage title="Settings" />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
