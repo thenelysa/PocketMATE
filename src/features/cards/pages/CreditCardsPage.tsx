@@ -502,7 +502,10 @@ export function CreditCardsPage() {
           <DialogHeader>
             <DialogTitle>Delete Credit Card</DialogTitle>
           </DialogHeader>
-          <p className="text-[#4B5D7A]">Are you sure you want to delete this credit card? This action cannot be undone.</p>
+          <div className="text-center">
+            <img src="/images/delete.png" alt="Delete" className="w-20 h-20 mx-auto mb-4" />
+            <p className="text-[#4B5D7A]">Are you sure you want to delete this credit card? This action cannot be undone.</p>
+          </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowDeleteDialog(false)}>Cancel</Button>
             <Button onClick={() => cardToDelete && handleDeleteCard(cardToDelete)} className="bg-red-500 hover:bg-red-600">Delete</Button>
