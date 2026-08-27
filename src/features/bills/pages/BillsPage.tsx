@@ -821,7 +821,7 @@ export function BillsPage() {
           <DialogTitle>Delete Bill</DialogTitle>
         </DialogHeader>
         <DialogContent className="text-center">
-          <img src="/images/mascot-bill.png" alt="Delete" className="w-20 h-20 mx-auto mb-4" />
+          <img src="/images/delete.png" alt="Delete" className="w-20 h-20 mx-auto mb-4" />
           <p className="text-muted-foreground">Are you sure you want to delete this bill? This action cannot be undone.</p>
         </DialogContent>
         <DialogFooter className="justify-center sm:justify-center">
