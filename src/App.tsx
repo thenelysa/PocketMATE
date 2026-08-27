@@ -10,18 +10,7 @@ import { LoginPage } from '@/features/auth/pages/LoginPage';
 import { DashboardPage } from '@/features/dashboard/pages/DashboardPage';
 import { BillsPage } from '@/features/bills/pages/BillsPage';
 import { CreditCardsPage } from '@/features/cards/pages/CreditCardsPage';
-
-// Temporary placeholder for corrupted pages
-function PlaceholderPage({ title }: { title: string }) {
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-[#071936] mb-4">{title}</h1>
-        <p className="text-[#4B5D7A]">This page is being refactored.</p>
-      </div>
-    </div>
-  );
-}
+import { LandingPage } from '@/features/landing/LandingPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
@@ -65,7 +54,7 @@ function AuthRoute() {
   return <LoginPage />;
 }
 
-function LandingPage() {
+function LandingRoute() {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
@@ -83,13 +72,13 @@ function LandingPage() {
     return <Navigate to="/app/dashboard" replace />;
   }
 
-  return <LoginPage />;
+  return <LandingPage />;
 }
 
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<LandingRoute />} />
       <Route path="/login" element={<AuthRoute />} />
       <Route
         path="/app"
@@ -103,9 +92,6 @@ function AppRoutes() {
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="bills" element={<BillsPage />} />
         <Route path="cards" element={<CreditCardsPage />} />
-        <Route path="reminders" element={<PlaceholderPage title="Reminders" />} />
-        <Route path="reports" element={<PlaceholderPage title="Reports" />} />
-        <Route path="settings" element={<PlaceholderPage title="Settings" />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
