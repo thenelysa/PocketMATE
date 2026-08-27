@@ -432,7 +432,7 @@ export function BillsPage() {
       {filteredBills.length === 0 ? (
         <Card className="border border-[#D5ECEB] bg-[#F7F8F5]">
           <CardContent className="py-12 text-center">
-            <img src="/images/mascot-n'.png" alt="No bills" className="h-24 w-auto mx-auto mb-4 opacity-80" />
+            <img src="/images/mascot-bill.png" alt="No bills" className="h-24 w-auto mx-auto mb-4 opacity-80" />
             <p className="text-[#4B5D7A] mb-2">No bills found</p>
             <Button
               variant="link"

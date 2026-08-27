@@ -245,7 +245,7 @@ export function DashboardPage() {
           <CardContent>
             {stats.dueSoon.length === 0 ? (
               <div className="text-center py-8">
-                <img src="/images/mascot.png" alt="All caught up" className="w-16 h-auto mx-auto mb-4 opacity-50" />
+                <img src="/images/mascot-bill.png" alt="All caught up" className="w-16 h-auto mx-auto mb-4 opacity-50" />
                 <p className="text-[#4B5D7A]">
                   No bills due in the next 7 days 🎉
                 </p>
@@ -406,7 +406,7 @@ export function DashboardPage() {
         <p className="text-sm text-[#4B5D7A]">
           2026 PocketMATE. All rights reserved.
         </p>
-        <img src="/images/mascot.png" alt="PocketMATE" className="w-8 h-auto mx-auto mt-2" />
+        <img src="/images/mascot-bill.png" alt="PocketMATE" className="w-8 h-auto mx-auto mt-2" />
       </div>
     </div>
   );
