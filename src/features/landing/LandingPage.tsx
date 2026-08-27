@@ -6,7 +6,7 @@ import {
   TrendingUp,
   Plus,
   BellRing,
-  CheckCircle
+  CheckCircle,
 } from 'lucide-react';
 
 export function LandingPage() {
@@ -80,17 +80,6 @@ export function LandingPage() {
                     `;
                   }}
                 />
-              </div>
-              <div className="absolute -bottom-4 -right-4 bg-white rounded-xl shadow-lg p-4 border border-[#D5ECEB]">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-[#F0FAF4] rounded-full flex items-center justify-center">
-                    <CheckCircle className="w-5 h-5 text-[#078D88]" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-[#071936]">Payment Due</p>
-                    <p className="text-xs text-[#4B5D7A]">Electricity Bill - Rs. 2,500</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
