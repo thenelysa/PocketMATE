@@ -6,10 +6,7 @@ import {
   TrendingUp,
   Plus,
   BellRing,
-  CheckCircle,
-  Star,
-  Users,
-  DollarSign
+  CheckCircle
 } from 'lucide-react';
 
 export function LandingPage() {
@@ -38,7 +35,7 @@ export function LandingPage() {
             </nav>
             <Link to="/login">
               <Button className="bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90">
-                Get Started
+                Login
               </Button>
             </Link>
           </div>
@@ -61,27 +58,24 @@ export function LandingPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link to="/login">
-                  <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90 px-8">
-                    Get Started Free
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-[#078D88] text-[#078D88] hover:bg-[#F0FAF4] px-8">
+                    Login
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-[#078D88] text-[#078D88] hover:bg-[#F0FAF4] px-8">
-                  Watch Demo
-                </Button>
               </div>
             </div>
             <div className="relative">
               <div className="bg-white rounded-2xl shadow-2xl p-4 border border-[#D5ECEB]">
                 <img
-                  src="/images/hero-dashboard.png"
-                  alt="PocketMATE Dashboard"
+                  src="/images/mascot.png"
+                  alt="PocketMATE Mascot"
                   className="w-full rounded-lg"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                     e.currentTarget.parentElement!.innerHTML = `
                       <div class="bg-gradient-to-br from-[#078D88] to-[#19C4B6] rounded-lg p-8 text-white text-center">
-                        <h3 class="text-2xl font-bold mb-2">Dashboard Preview</h3>
-                        <p class="opacity-80">Manage all your bills in one place</p>
+                        <h3 class="text-2xl font-bold mb-2">PocketMATE Mascot</h3>
+                        <p class="opacity-80">Your friendly bill management assistant</p>
                       </div>
                     `;
                   }}
@@ -198,35 +192,6 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-br from-[#078D88] to-[#19C4B6]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8 text-center text-white">
-            <div>
-              <div className="flex items-center justify-center gap-3 mb-2">
-                <Users className="w-8 h-8" />
-                <span className="text-5xl font-extrabold">10k+</span>
-              </div>
-              <p className="text-lg opacity-90">Active Users</p>
-            </div>
-            <div>
-              <div className="flex items-center justify-center gap-3 mb-2">
-                <DollarSign className="w-8 h-8" />
-                <span className="text-5xl font-extrabold">$1M+</span>
-              </div>
-              <p className="text-lg opacity-90">Bills Tracked</p>
-            </div>
-            <div>
-              <div className="flex items-center justify-center gap-3 mb-2">
-                <Star className="w-8 h-8" />
-                <span className="text-5xl font-extrabold">4.9★</span>
-              </div>
-              <p className="text-lg opacity-90">User Rating</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
@@ -238,7 +203,7 @@ export function LandingPage() {
           </p>
           <Link to="/login">
             <Button size="lg" className="bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90 px-8">
-              Get Started Free
+              Login
             </Button>
           </Link>
         </div>
