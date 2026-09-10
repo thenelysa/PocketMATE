@@ -1,6 +1,7 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   Receipt,
   Bell,
@@ -11,6 +12,7 @@ import {
 } from 'lucide-react';
 
 export function LandingPage() {
+  const { signIn } = useAuth();
   const [scrolled, setScrolled] = useState(false);
 
   const login = useGoogleLogin({
@@ -20,8 +22,13 @@ export function LandingPage() {
           headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
         });
         const userInfo = await res.json();
-        // Handle login - redirect to dashboard
-        window.location.href = '/app/dashboard';
+        // Sign in with the user data
+        signIn({
+          id: userInfo.sub,
+          email: userInfo.email,
+          name: userInfo.name,
+          picture: userInfo.picture,
+        });
       } catch (error) {
         console.error('Login error:', error);
       }
