@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui';
 import {
   Receipt,
@@ -10,34 +11,56 @@ import {
 } from 'lucide-react';
 
 export function LandingPage() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#F7F8F5]">
-      {/* Header */}
-      <header className="bg-white border-b border-[#D5ECEB]">
+      {/* Spacer for fixed header */}
+      <div className="h-[72px]" />
+
+      {/* Header - Sticky with gradient on scroll */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-gradient-to-r from-[#078D88] to-[#19C4B6] shadow-lg'
+          : 'bg-white border-b border-[#D5ECEB]'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[72px]">
             <div className="flex items-center gap-3">
               <img src="/images/logo.png" alt="PocketMATE Logo" className="h-10 w-auto" />
-              <span className="text-xl font-bold bg-gradient-to-r from-[#078D88] to-[#19C4B6] bg-clip-text text-transparent">
+              <span className={`text-xl font-bold ${
+                scrolled
+                  ? 'text-white'
+                  : 'bg-gradient-to-r from-[#078D88] to-[#19C4B6] bg-clip-text text-transparent'
+              }`}>
                 PocketMATE
               </span>
             </div>
             <nav className="hidden md:flex items-center gap-8">
-              <a href="#features" className="text-sm font-medium text-[#4B5D7A] hover:text-[#078D88] transition-colors">
+              <a href="#features" className={`text-sm font-medium transition-colors ${
+                scrolled ? 'text-white hover:text-[#F7F8F5]' : 'text-[#4B5D7A] hover:text-[#078D88]'
+              }`}>
                 Features
               </a>
-              <a href="#how-it-works" className="text-sm font-medium text-[#4B5D7A] hover:text-[#078D88] transition-colors">
+              <a href="#how-it-works" className={`text-sm font-medium transition-colors ${
+                scrolled ? 'text-white hover:text-[#F7F8F5]' : 'text-[#4B5D7A] hover:text-[#078D88]'
+              }`}>
                 How It Works
               </a>
-              <a href="#about" className="text-sm font-medium text-[#4B5D7A] hover:text-[#078D88] transition-colors">
+              <a href="#about" className={`text-sm font-medium transition-colors ${
+                scrolled ? 'text-white hover:text-[#F7F8F5]' : 'text-[#4B5D7A] hover:text-[#078D88]'
+              }`}>
                 About
               </a>
             </nav>
-            <Link to="/login">
-              <Button className="bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90">
-                Login
-              </Button>
-            </Link>
           </div>
         </div>
       </header>
