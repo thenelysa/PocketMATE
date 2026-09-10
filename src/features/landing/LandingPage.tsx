@@ -55,11 +55,6 @@ export function LandingPage() {
               }`}>
                 How It Works
               </a>
-              <a href="#about" className={`text-sm font-medium transition-colors ${
-                scrolled ? 'text-white hover:text-[#F7F8F5]' : 'text-[#4B5D7A] hover:text-[#078D88]'
-              }`}>
-                About
-              </a>
             </nav>
           </div>
         </div>
