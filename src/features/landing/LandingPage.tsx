@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui';
 import {
@@ -12,6 +12,21 @@ import {
 
 export function LandingPage() {
   const [scrolled, setScrolled] = useState(false);
+
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+        });
+        const userInfo = await res.json();
+        // Handle login - redirect to dashboard
+        window.location.href = '/app/dashboard';
+      } catch (error) {
+        console.error('Login error:', error);
+      }
+    },
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,6 +71,16 @@ export function LandingPage() {
                 How It Works
               </a>
             </nav>
+            <Button
+              onClick={() => login()}
+              className={`${
+                scrolled
+                  ? 'bg-white text-[#078D88] hover:bg-[#F7F8F5]'
+                  : 'bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90'
+              }`}
+            >
+              Login
+            </Button>
           </div>
         </div>
       </header>
@@ -75,11 +100,14 @@ export function LandingPage() {
                 Stop juggling due dates and overdue notices. PocketMATE brings all your bills together in one smart, intuitive dashboard.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link to="/login">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-[#078D88] text-[#078D88] hover:bg-[#F0FAF4] px-8">
-                    Login
-                  </Button>
-                </Link>
+                <Button
+                  size="lg"
+                  onClick={() => login()}
+                  variant="outline"
+                  className="w-full sm:w-auto border-2 border-[#078D88] text-[#078D88] hover:bg-[#F0FAF4] px-8"
+                >
+                  Login
+                </Button>
               </div>
             </div>
             <div className="relative">
@@ -200,11 +228,13 @@ export function LandingPage() {
           <p className="text-lg text-[#4B5D7A] mb-8">
             Join thousands of users who have simplified their bill management.
           </p>
-          <Link to="/login">
-            <Button size="lg" className="bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90 px-8">
-              Login
-            </Button>
-          </Link>
+          <Button
+            size="lg"
+            onClick={() => login()}
+            className="bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90 px-8"
+          >
+            Login
+          </Button>
         </div>
       </section>
 
