@@ -65,22 +65,14 @@ export function LandingPage() {
               </div>
             </div>
             <div className="relative">
-              <div className="bg-white rounded-2xl shadow-2xl p-4 border border-[#D5ECEB]">
-                <img
-                  src="/images/mascot-n'.png"
-                  alt="PocketMATE Mascot"
-                  className="w-full rounded-lg"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.innerHTML = `
-                      <div class="bg-gradient-to-br from-[#078D88] to-[#19C4B6] rounded-lg p-8 text-white text-center">
-                        <h3 class="text-2xl font-bold mb-2">PocketMATE Mascot</h3>
-                        <p class="opacity-80">Your friendly bill management assistant</p>
-                      </div>
-                    `;
-                  }}
-                />
-              </div>
+              <img
+                src="/images/mascot-bill.png"
+                alt="PocketMATE Mascot"
+                className="w-full max-w-md mx-auto"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
             </div>
           </div>
         </div>
