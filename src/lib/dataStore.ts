@@ -395,3 +395,27 @@ export function getPaymentHistory(userId: string, limit: number = 50): (BillPaym
 
   return combined.slice(0, limit);
 }
+
+// Export all data for backup
+export function exportAllData() {
+  return {
+    bills: getFromStorage<Bill>(STORAGE_KEYS.BILLS),
+    billPayments: getFromStorage<BillPayment>(STORAGE_KEYS.BILL_PAYMENTS),
+    cards: getFromStorage<CreditCard>(STORAGE_KEYS.CARDS),
+    cardTransactions: getFromStorage<CardTransaction>(STORAGE_KEYS.CARD_TRANSACTIONS),
+    cardPayments: getFromStorage<CardPayment>(STORAGE_KEYS.CARD_PAYMENTS),
+    reminders: getFromStorage<Reminder>(STORAGE_KEYS.REMINDERS),
+    profile: getProfile(),
+  };
+}
+
+// Import data from backup
+export function importAllData(data: ReturnType<typeof exportAllData>) {
+  if (data.bills) saveToStorage(STORAGE_KEYS.BILLS, data.bills);
+  if (data.billPayments) saveToStorage(STORAGE_KEYS.BILL_PAYMENTS, data.billPayments);
+  if (data.cards) saveToStorage(STORAGE_KEYS.CARDS, data.cards);
+  if (data.cardTransactions) saveToStorage(STORAGE_KEYS.CARD_TRANSACTIONS, data.cardTransactions);
+  if (data.cardPayments) saveToStorage(STORAGE_KEYS.CARD_PAYMENTS, data.cardPayments);
+  if (data.reminders) saveToStorage(STORAGE_KEYS.REMINDERS, data.reminders);
+  if (data.profile) saveProfile(data.profile);
+}
