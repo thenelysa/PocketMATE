@@ -29,7 +29,7 @@ export function LandingPage() {
       {/* Header - Sticky with gradient on scroll */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-gradient-to-r from-[#078D88] to-[#19C4B6] shadow-lg'
+          ? 'bg-gradient-to-r from-[#078D88]/90 to-[#19C4B6]/90 backdrop-blur-sm shadow-lg'
           : 'bg-white border-b border-[#D5ECEB]'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
