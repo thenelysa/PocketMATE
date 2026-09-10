@@ -45,13 +45,13 @@ export function LandingPage() {
               </span>
             </div>
             <nav className="hidden md:flex items-center gap-8">
-              <a href="#features" className={`text-sm font-medium transition-colors ${
-                scrolled ? 'text-white hover:text-[#F7F8F5]' : 'text-[#4B5D7A] hover:text-[#078D88]'
+              <a href="#features" className={`text-base font-semibold transition-colors ${
+                scrolled ? 'text-white hover:text-[#F7F8F5]' : 'text-[#078D88] hover:text-[#065F5F]'
               }`}>
                 Features
               </a>
-              <a href="#how-it-works" className={`text-sm font-medium transition-colors ${
-                scrolled ? 'text-white hover:text-[#F7F8F5]' : 'text-[#4B5D7A] hover:text-[#078D88]'
+              <a href="#how-it-works" className={`text-base font-semibold transition-colors ${
+                scrolled ? 'text-white hover:text-[#F7F8F5]' : 'text-[#078D88] hover:text-[#065F5F]'
               }`}>
                 How It Works
               </a>
