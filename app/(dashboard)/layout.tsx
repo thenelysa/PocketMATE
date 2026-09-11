@@ -45,7 +45,13 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
     );
   }
 
-  if (!user) return null;
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F7F8F5]">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#078D88] border-t-transparent"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#F7F8F5] flex">
