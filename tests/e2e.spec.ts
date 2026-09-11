@@ -39,49 +39,49 @@ test.describe('PocketMATE E2E Tests', () => {
   });
 
   test('dashboard requires authentication', async ({ page }) => {
-    await page.goto(`${BASE_URL}/(dashboard)/dashboard`);
+    await page.goto(`${BASE_URL}/dashboard`);
 
     // Should redirect to login or show loading
     await page.waitForTimeout(2000);
     const url = page.url();
     // User should be redirected to login since not authenticated
-    expect(url.includes('/login') || url.includes('/(dashboard)/dashboard')).toBeTruthy();
+    expect(url.includes('/login') || url.includes('/dashboard')).toBeTruthy();
   });
 
   test('bills page is accessible', async ({ page }) => {
-    await page.goto(`${BASE_URL}/(dashboard)/bills`);
+    await page.goto(`${BASE_URL}/bills`);
     await page.waitForTimeout(2000);
     // Should show either login redirect or the page
     const url = page.url();
-    expect(url.includes('/(dashboard)/bills') || url.includes('/login')).toBeTruthy();
+    expect(url.includes('/bills') || url.includes('/login')).toBeTruthy();
   });
 
   test('cards page is accessible', async ({ page }) => {
-    await page.goto(`${BASE_URL}/(dashboard)/cards`);
+    await page.goto(`${BASE_URL}/cards`);
     await page.waitForTimeout(2000);
     const url = page.url();
-    expect(url.includes('/(dashboard)/cards') || url.includes('/login')).toBeTruthy();
+    expect(url.includes('/cards') || url.includes('/login')).toBeTruthy();
   });
 
   test('reminders page is accessible', async ({ page }) => {
-    await page.goto(`${BASE_URL}/(dashboard)/reminders`);
+    await page.goto(`${BASE_URL}/reminders`);
     await page.waitForTimeout(2000);
     const url = page.url();
-    expect(url.includes('/(dashboard)/reminders') || url.includes('/login')).toBeTruthy();
+    expect(url.includes('/reminders') || url.includes('/login')).toBeTruthy();
   });
 
   test('reports page is accessible', async ({ page }) => {
-    await page.goto(`${BASE_URL}/(dashboard)/reports`);
+    await page.goto(`${BASE_URL}/reports`);
     await page.waitForTimeout(2000);
     const url = page.url();
-    expect(url.includes('/(dashboard)/reports') || url.includes('/login')).toBeTruthy();
+    expect(url.includes('/reports') || url.includes('/login')).toBeTruthy();
   });
 
   test('settings page is accessible', async ({ page }) => {
-    await page.goto(`${BASE_URL}/(dashboard)/settings`);
+    await page.goto(`${BASE_URL}/settings`);
     await page.waitForTimeout(2000);
     const url = page.url();
-    expect(url.includes('/(dashboard)/settings') || url.includes('/login')).toBeTruthy();
+    expect(url.includes('/settings') || url.includes('/login')).toBeTruthy();
   });
 
   test('404 page renders for unknown routes', async ({ page }) => {
