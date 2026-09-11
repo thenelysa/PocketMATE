@@ -1,0 +1,145 @@
+// PocketMATE data model — introspected from the live Neon database.
+//
+// Fields are camelCase (what TypeScript sees); columns and tables keep their
+// snake_case names via @map / @@map. That is why no case-conversion helper
+// exists in application code.
+//
+// ⚠️ This schema was generated with `prisma db pull` FROM the existing database,
+// not the other way round. There is no migration history yet — see
+// docs/DATABASE.md before running any prisma migrate command.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String          @id @db.VarChar(255)
+  email         String          @unique @db.VarChar(255)
+  name          String?         @db.VarChar(255)
+  picture       String?
+  createdAt     DateTime?       @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime?       @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  bills         Bill[]
+  cards         CreditCard[]
+  reminders     Reminder[]
+  profiles      UserProfile[]
+
+  @@map("users")
+}
+
+model Bill {
+  id            String          @id @default(uuid()) @db.VarChar(255)
+  userId        String?         @map("user_id") @db.VarChar(255)
+  name          String          @db.VarChar(255)
+  provider      String?         @db.VarChar(255)
+  amount        Decimal         @db.Decimal(10, 2)
+  dueDate       DateTime        @map("due_date") @db.Timestamp(6)
+  category      String?         @db.VarChar(50)
+  recurrence    String?         @db.VarChar(20)
+  /// 'PAID' | 'UNPAID' — the dashboard counts on exactly these two values.
+  status        String?         @default("UNPAID") @db.VarChar(20)
+  isBusiness    Boolean?        @default(false) @map("is_business")
+  paidAmount    Decimal?        @default(0) @map("paid_amount") @db.Decimal(10, 2)
+  paymentDate   DateTime?       @map("payment_date") @db.Timestamp(6)
+  notes         String?
+  createdAt     DateTime?       @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime?       @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  payments      BillPayment[]
+  user          User?           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("bills")
+}
+
+model CreditCard {
+  id                 String              @id @default(uuid()) @db.VarChar(255)
+  userId             String?             @map("user_id") @db.VarChar(255)
+  bankName           String              @map("bank_name") @db.VarChar(255)
+  cardName           String?             @map("card_name") @db.VarChar(255)
+  lastFourDigits     String?             @map("last_four_digits") @db.VarChar(4)
+  creditLimit        Decimal             @map("credit_limit") @db.Decimal(10, 2)
+  currentOutstanding Decimal?            @default(0) @map("current_outstanding") @db.Decimal(10, 2)
+  /// Day of month, 1-31.
+  statementDate      Int?                @default(1) @map("statement_date")
+  /// Day of month, 1-31.
+  paymentDueDate     Int?                @default(15) @map("payment_due_date")
+  minimumPayment     Decimal?            @default(0) @map("minimum_payment") @db.Decimal(10, 2)
+  annualInterestRate Decimal?            @default(0) @map("annual_interest_rate") @db.Decimal(5, 2)
+  cardStatus         String?             @default("ACTIVE") @map("card_status") @db.VarChar(20)
+  createdAt          DateTime?           @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt          DateTime?           @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  payments           CardPayment[]
+  transactions       CardTransaction[]
+  user               User?               @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("credit_cards")
+}
+
+model Reminder {
+  id             String    @id @default(uuid()) @db.VarChar(255)
+  userId         String?   @map("user_id") @db.VarChar(255)
+  type           String    @db.VarChar(50)
+  referenceId   String?   @db.VarChar(255) @map("reference_id")
+  referenceType String?   @db.VarChar(50) @map("reference_type")
+  title          String    @db.VarChar(255)
+  message        String?
+  remindAt      DateTime  @db.Timestamp(6) @map("remind_at")
+  isSent         Boolean?  @default(false) @map("is_sent")
+  createdAt      DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
+  user           User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("reminders")
+}
+
+model BillPayment {
+  @@map("bill_payments")
+
+  id           String    @id @db.VarChar(255)
+  billId      String?   @db.VarChar(255) @map("bill_id")
+  amount       Decimal   @db.Decimal(10, 2)
+  paymentDate DateTime  @db.Timestamp(6) @map("payment_date")
+  createdAt   DateTime? @default(now()) @db.Timestamp(6) @map("created_at")
+  bills        Bill?     @relation(fields: [billId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model CardPayment {
+  @@map("card_payments")
+
+  id           String      @id @db.VarChar(255)
+  cardId      String?     @db.VarChar(255) @map("card_id")
+  amount       Decimal     @db.Decimal(10, 2)
+  paymentDate DateTime    @db.Timestamp(6) @map("payment_date")
+  notes        String?
+  createdAt   DateTime?   @default(now()) @db.Timestamp(6) @map("created_at")
+  credit_cards CreditCard? @relation(fields: [cardId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model CardTransaction {
+  @@map("card_transactions")
+
+  id               String      @id @db.VarChar(255)
+  cardId          String?     @db.VarChar(255) @map("card_id")
+  description      String?
+  amount           Decimal     @db.Decimal(10, 2)
+  transactionDate DateTime    @db.Timestamp(6) @map("transaction_date")
+  createdAt       DateTime?   @default(now()) @db.Timestamp(6) @map("created_at")
+  credit_cards     CreditCard? @relation(fields: [cardId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model UserProfile {
+  @@map("user_profiles")
+
+  id                   String    @id @db.VarChar(255)
+  userId              String?   @db.VarChar(255) @map("user_id")
+  displayName         String?   @db.VarChar(255) @map("display_name")
+  preferredCurrency   String?   @default("NPR") @db.VarChar(10) @map("preferred_currency")
+  reminderDaysBefore Int?      @default(3) @map("reminder_days_before")
+  monthlyBudget       Decimal?  @db.Decimal(10, 2) @map("monthly_budget")
+  createdAt           DateTime? @default(now()) @db.Timestamp(6) @map("created_at")
+  updatedAt           DateTime? @default(now()) @db.Timestamp(6) @map("updated_at")
+  users                User?     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
