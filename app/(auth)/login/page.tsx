@@ -42,7 +42,7 @@ function LoginForm() {
 
       // Login locally
       login(userData);
-      router.push('/(dashboard)/dashboard');
+      router.push('/dashboard');
     } catch (err) {
       setError('Failed to sign in. Please try again.');
       console.error('Login error:', err);

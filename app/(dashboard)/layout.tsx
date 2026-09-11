@@ -18,12 +18,12 @@ import {
 import { useState } from 'react';
 
 const navItems = [
-  { href: '/(dashboard)/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/(dashboard)/bills', label: 'Bills', icon: Receipt },
-  { href: '/(dashboard)/cards', label: 'Cards', icon: CreditCard },
-  { href: '/(dashboard)/reminders', label: 'Reminders', icon: Bell },
-  { href: '/(dashboard)/reports', label: 'Reports', icon: BarChart3 },
-  { href: '/(dashboard)/settings', label: 'Settings', icon: Settings },
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/bills', label: 'Bills', icon: Receipt },
+  { href: '/cards', label: 'Cards', icon: CreditCard },
+  { href: '/reminders', label: 'Reminders', icon: Bell },
+  { href: '/reports', label: 'Reports', icon: BarChart3 },
+  { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
 function DashboardContent({ children }: { children: React.ReactNode }) {
