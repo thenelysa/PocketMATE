@@ -39,3 +39,53 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Failed to create bill' }, { status: 500 });
   }
 }
+
+export async function PUT(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, name, provider, amount, dueDate, category, recurrence, notes, isBusiness, status, paidAmount, paymentDate } = body;
+
+    const result = await pool.query(
+      `UPDATE bills SET
+        name = COALESCE($1, name),
+        provider = COALESCE($2, provider),
+        amount = COALESCE($3, amount),
+        due_date = COALESCE($4, due_date),
+        category = COALESCE($5, category),
+        recurrence = COALESCE($6, recurrence),
+        notes = COALESCE($7, notes),
+        is_business = COALESCE($8, is_business),
+        status = COALESCE($9, status),
+        paid_amount = COALESCE($10, paid_amount),
+        payment_date = COALESCE($11, payment_date),
+        updated_at = CURRENT_TIMESTAMP
+       WHERE id = $12 RETURNING *`,
+      [name, provider, amount, dueDate, category, recurrence, notes, isBusiness, status, paidAmount, paymentDate, id]
+    );
+
+    if (result.rows.length === 0) {
+      return NextResponse.json({ error: 'Bill not found' }, { status: 404 });
+    }
+    return NextResponse.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error updating bill:', error);
+    return NextResponse.json({ error: 'Failed to update bill' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ error: 'Bill ID required' }, { status: 400 });
+    }
+
+    await pool.query('DELETE FROM bills WHERE id = $1', [id]);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting bill:', error);
+    return NextResponse.json({ error: 'Failed to delete bill' }, { status: 500 });
+  }
+}

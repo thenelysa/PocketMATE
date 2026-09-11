@@ -58,15 +58,17 @@ export default function LandingPage() {
                 How It Works
               </a>
             </nav>
-            <Button
-              className={`${
-                scrolled
-                  ? 'bg-white text-[#078D88] hover:bg-[#F7F8F5]'
-                  : 'bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90'
-              }`}
-            >
-              Login
-            </Button>
+            <Link href="/login">
+              <Button
+                className={`${
+                  scrolled
+                    ? 'bg-white text-[#078D88] hover:bg-[#F7F8F5]'
+                    : 'bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90'
+                }`}
+              >
+                Login
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
@@ -86,13 +88,15 @@ export default function LandingPage() {
                 Stop juggling due dates and overdue notices. PocketMATE brings all your bills together in one smart, intuitive dashboard.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto border-2 border-[#078D88] text-[#078D88] hover:bg-[#F0FAF4] px-8"
-                >
-                  Login
-                </Button>
+                <Link href="/login">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto border-2 border-[#078D88] text-[#078D88] hover:bg-[#F0FAF4] px-8"
+                  >
+                    Login
+                  </Button>
+                </Link>
               </div>
             </div>
             <div className="relative">
@@ -210,12 +214,14 @@ export default function LandingPage() {
           <p className="text-lg text-[#4B5D7A] mb-8">
             Join thousands of users who have simplified their bill management.
           </p>
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90 px-8"
-          >
-            Login
-          </Button>
+          <Link href="/login">
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90 px-8"
+            >
+              Login
+            </Button>
+          </Link>
         </div>
       </section>
 

@@ -39,3 +39,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Failed to create card' }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ error: 'Card ID required' }, { status: 400 });
+    }
+
+    await pool.query('DELETE FROM credit_cards WHERE id = $1', [id]);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting card:', error);
+    return NextResponse.json({ error: 'Failed to delete card' }, { status: 500 });
+  }
+}
