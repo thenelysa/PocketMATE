@@ -1,32 +1,35 @@
 # Dependencies
 node_modules/
 
-# Build output
-dist/
-build/
+# Next.js build output
+.next/
+out/
+next-env.d.ts
 
 # Environment files (keep .env.example)
 .env
-.env.local
+.env*.local
 .env.production
+.neon
 
-# Editor directories
+# Test artifacts
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+# Editor / OS
 .vscode/
 .idea/
-
-# OS files
 .DS_Store
 Thumbs.db
 
-# Logs
+# Logs & caches
 *.log
 npm-debug.log*
-
-# TypeScript cache
 *.tsbuildinfo
-
-# Temporary files
 *.tmp
 *.temp
-.neon
-.env
+
+# Agent tooling scratch
+.omc/
