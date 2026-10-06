@@ -177,6 +177,7 @@ h1, h2, h3, p { text-wrap: pretty; }
 .login-story { padding: 48px; background: #274B44; }
 .login-story h2 { font: 43px/1.1 var(--display-font); letter-spacing: -1px; margin-top: 20px; color: white; }
 .login-story .eyebrow { color: rgba(255,255,255,0.6); }
+.sikka-note { font: 16px/1.5 sans-serif; color: rgba(255,255,255,0.75); margin-top: 20px; font-style: italic; }
 .login-number { font: 72px/1 var(--display-font); color: #BE193F; margin: 30px 0 0; text-shadow: 0 0 40px rgba(190, 25, 63, 0.4); }
 .login-number-label { font-size: 12px; letter-spacing: 2px; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-bottom: 0; }
 .login-story .mascot { width: 210px; margin: 15px auto 0; }

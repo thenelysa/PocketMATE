@@ -44,7 +44,7 @@ function LoginForm() {
       <header className="site-header wrap"><BrandLogo /><div className="header-actions"><ThemePicker /><Link href="/" className="text-link !mt-0"><ArrowLeft size={15} /> Back home</Link></div></header>
       <main className="flex-1 flex items-center justify-center py-12">
         <div className="login-layout">
-          <section className="login-story"><p className="eyebrow">A LITTLE LESS ON YOUR MIND</p><h2>Come on in.<br />Get a little<br />more together.</h2><Mascot /></section>
+          <section className="login-story"><p className="eyebrow">A LITTLE LESS ON YOUR MIND</p><h2>Come on in.<br />Get a little<br />more together.</h2><p className="sikka-note">Your bills, organized.<br />Your peace, restored.</p><Mascot /></section>
           <section className="login-content">
             <p className="eyebrow text-muted mb-4">YOUR POCKETMATE AWAITS</p><h1 className="dashboard-heading mb-3">Welcome home.</h1><p className="text-sm text-muted mb-8">Sign in to give your bills, cards, and due dates a place of their own.</p>
             {error && <div role="alert" className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{error}</div>}

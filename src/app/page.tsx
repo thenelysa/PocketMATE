@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowUpRight, ArrowRight, Check, Receipt, Bell, CreditCard } from 'lucide-react';
+import { ThemePicker } from '@/components/theme-picker';
 import { BrandLogo } from '@/components/brand-logo';
 import { Mascot } from '@/components/mascot';
 
@@ -9,7 +10,7 @@ export default function LandingPage() {
       <header className="site-header wrap">
         <BrandLogo />
         <nav aria-label="Main navigation"><a href="#features">The little details</a><a href="#how-it-works">How it works</a></nav>
-        <Link href="/login" className="header-login">Sign in <ArrowUpRight size={16} /></Link>
+        <div className="header-actions"><ThemePicker /><Link href="/login" className="header-login">Sign in <ArrowUpRight size={16} /></Link></div>
       </header>
       <main>
         <section className="hero wrap">
