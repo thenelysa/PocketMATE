@@ -26,7 +26,7 @@ export default function NotFound() {
         href="/"
         style={{
           padding: '0.75rem 1.5rem',
-          background: 'linear-gradient(to right, #078D88, #19C4B6)',
+          background: '#274B44',
           color: 'white',
           borderRadius: '0.75rem',
           fontWeight: '600',

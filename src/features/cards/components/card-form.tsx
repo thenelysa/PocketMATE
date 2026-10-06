@@ -6,8 +6,8 @@ import { Button } from '@/components/ui';
 import { useCreateCard } from '../hooks';
 
 const inputClass =
-  'w-full px-4 py-2 border border-[#D5ECEB] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#078D88]';
-const labelClass = 'block text-sm font-semibold text-[#071936] mb-1';
+  'w-full px-4 py-2 border border-line rounded-xl focus:outline-none focus:ring-2 focus:ring-teal';
+const labelClass = 'block text-sm font-semibold text-ink mb-1';
 
 const EMPTY = {
   bankName: '',
@@ -53,9 +53,9 @@ export function CardForm({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b border-[#D5ECEB]">
-          <h3 className="text-lg font-bold text-[#071936]">Add New Card</h3>
-          <button onClick={onClose} className="text-[#4B5D7A] hover:text-[#071936]" aria-label="Close">
+        <div className="flex items-center justify-between p-6 border-b border-line">
+          <h3 className="text-lg font-bold text-ink">Add New Card</h3>
+          <button onClick={onClose} className="text-muted hover:text-ink" aria-label="Close">
             <X className="w-5 h-5" />
           </button>
         </div>

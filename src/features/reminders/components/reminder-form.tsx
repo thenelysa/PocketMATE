@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import { Button } from '@/components/ui';
+import { Button, DatePicker } from '@/components/ui';
 import { useCreateReminder } from '../hooks';
 import { BILL_REFERENCE, BILL_REMINDER } from '../types';
 import type { Bill } from '@/features/bills/types';
 
 const inputClass =
-  'w-full px-4 py-2 border border-[#D5ECEB] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#078D88]';
-const labelClass = 'block text-sm font-semibold text-[#071936] mb-1';
+  'w-full px-4 py-2 border border-line rounded-xl focus:outline-none focus:ring-2 focus:ring-teal';
+const labelClass = 'block text-sm font-semibold text-ink mb-1';
 
 /**
  * Create-only modal. `bills` populates the optional "related bill" select; the
@@ -20,6 +20,7 @@ const labelClass = 'block text-sm font-semibold text-[#071936] mb-1';
  */
 export function ReminderForm({ bills, onClose }: { bills: Bill[]; onClose: () => void }) {
   const createReminder = useCreateReminder();
+  const [error, setError] = useState('');
   const [values, setValues] = useState({
     billId: '',
     title: '',
@@ -30,13 +31,18 @@ export function ReminderForm({ bills, onClose }: { bills: Bill[]; onClose: () =>
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    const remindAt = new Date(`${values.remindDate}T${values.remindTime}`);
+    if (!Number.isFinite(remindAt.getTime()) || remindAt.getTime() <= Date.now()) {
+      setError('Choose a reminder date and time in the future.');
+      return;
+    }
     const bill = bills.find(b => b.id === values.billId);
     try {
       await createReminder.mutateAsync({
         type: BILL_REMINDER,
         title: values.title || bill?.name || 'Reminder',
-        // a blank time means midnight local
-        remindAt: new Date(`${values.remindDate}T${values.remindTime || '00:00'}`).toISOString(),
+        remindAt: remindAt.toISOString(),
         referenceType: bill ? BILL_REFERENCE : null,
         referenceId: bill ? bill.id : null,
         message: values.message || null,
@@ -44,21 +50,23 @@ export function ReminderForm({ bills, onClose }: { bills: Bill[]; onClose: () =>
       });
       onClose();
     } catch (err) {
-      console.error('Failed to create reminder:', err);
+      setError(err instanceof Error ? err.message : 'Could not save this reminder. Please try again.');
     }
   };
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg">
-        <div className="flex items-center justify-between p-6 border-b border-[#D5ECEB]">
-          <h3 className="text-lg font-bold text-[#071936]">Create Reminder</h3>
-          <button onClick={onClose} className="text-[#4B5D7A] hover:text-[#071936]" aria-label="Close">
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-6 border-b border-line">
+          <h3 className="text-lg font-bold text-ink">Create Reminder</h3>
+          <button onClick={onClose} className="text-muted hover:text-ink" aria-label="Close">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
+          <p className="text-xs text-muted">Times use your device&apos;s time zone. Alerts appear while PocketMATE is open.</p>
           <div>
             <label htmlFor="reminder-title" className={labelClass}>Title *</label>
             <input
@@ -90,20 +98,14 @@ export function ReminderForm({ bills, onClose }: { bills: Bill[]; onClose: () =>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label htmlFor="reminder-date" className={labelClass}>Date *</label>
-              <input
-                id="reminder-date"
-                type="date"
-                required
-                value={values.remindDate}
-                onChange={e => setValues({ ...values, remindDate: e.target.value })}
-                className={inputClass}
-              />
+              <DatePicker id="reminder-date" label="Reminder date" required value={values.remindDate} onChange={date => setValues({ ...values, remindDate: date })} />
             </div>
             <div>
-              <label htmlFor="reminder-time" className={labelClass}>Time</label>
+              <label htmlFor="reminder-time" className={labelClass}>Time *</label>
               <input
                 id="reminder-time"
                 type="time"
+                required
                 value={values.remindTime}
                 onChange={e => setValues({ ...values, remindTime: e.target.value })}
                 className={inputClass}

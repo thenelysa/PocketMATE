@@ -41,20 +41,22 @@ confirm which one went.
 ## Writing a handler
 
 ```ts
+import { requireUser } from '@/lib/session';
 import { prisma } from '@/lib/db';
 import { ok, route, requireParam, requireField } from '@/lib/api';
 
 export const GET = route('budgets.GET', async (request: Request) => {
-  const userId = requireParam(request, 'userId');
+  const userId = await requireUser(request);
   const budgets = await prisma.budget.findMany({ where: { userId } });
   return ok(budgets);
 });
 
 export const POST = route('budgets.POST', async (request: Request) => {
+  const userId = await requireUser(request);
   const body = await request.json();
   const budget = await prisma.budget.create({
     data: {
-      userId: requireField<string>(body, 'userId'),
+      userId,
       name: requireField<string>(body, 'name'),
       limitAmount: body.limitAmount ?? 0,
     },

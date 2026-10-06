@@ -15,13 +15,12 @@ Full detail: `docs/DATABASE.md`.
    dueDate DateTime @map("due_date")
    ```
 
-2. **⚠️ There is no migration history yet.** This schema was introspected from
-   the live database with `prisma db pull`. `migrations/` is empty.
-
-   **Do not run `prisma migrate dev` or `prisma db push` against the real
-   database** — Prisma would rewrite it to match the schema, dropping anything
-   the schema does not describe. Baseline it first; the exact commands are in
-   `docs/DATABASE.md`.
+2. **The Money Studio migrations were tested on an isolated branch and applied
+   to production with explicit approval.** The existing schema has a generated
+   `0_init` baseline. Do not execute its CREATE statements against populated tables.
+   Verify the target matches the baseline, mark it applied, then deploy only the
+   additive migration. See `docs/MONEY-STUDIO.md`. Do not use `db push` or migrate
+   dev against the live database.
 
    Four tables (`bill_payments`, `card_payments`, `card_transactions`,
    `user_profiles`) exist in the database and are modelled here **only** so a

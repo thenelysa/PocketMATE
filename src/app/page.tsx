@@ -1,249 +1,56 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui';
-import {
-  Receipt,
-  Bell,
-  TrendingUp,
-  Plus,
-  BellRing,
-  CheckCircle,
-} from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Check, Receipt, Bell, CreditCard } from 'lucide-react';
+import { BrandLogo } from '@/components/brand-logo';
+import { Mascot } from '@/components/mascot';
 
 export default function LandingPage() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-[#F7F8F5]">
-      {/* Spacer for fixed header */}
-      <div className="h-[72px]" />
-
-      {/* Header - Sticky with gradient on scroll */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-gradient-to-r from-[#078D88]/90 to-[#19C4B6]/90 backdrop-blur-sm shadow-lg'
-          : 'bg-white border-b border-[#D5ECEB]'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-[72px]">
-            <div className="flex items-center gap-3">
-              <img src="/images/logo.png" alt="PocketMATE Logo" className="h-10 w-auto" />
-              <span className={`text-xl font-bold ${
-                scrolled
-                  ? 'text-white'
-                  : 'bg-gradient-to-r from-[#078D88] to-[#19C4B6] bg-clip-text text-transparent'
-              }`}>
-                PocketMATE
-              </span>
-            </div>
-            <nav className="hidden md:flex items-center gap-8">
-              <a href="#features" className={`text-base font-semibold transition-colors ${
-                scrolled ? 'text-white hover:text-[#F7F8F5]' : 'text-[#078D88] hover:text-[#065F5F]'
-              }`}>
-                Features
-              </a>
-              <a href="#how-it-works" className={`text-base font-semibold transition-colors ${
-                scrolled ? 'text-white hover:text-[#F7F8F5]' : 'text-[#078D88] hover:text-[#065F5F]'
-              }`}>
-                How It Works
-              </a>
-            </nav>
-            <Link href="/login">
-              <Button
-                className={`${
-                  scrolled
-                    ? 'bg-white text-[#078D88] hover:bg-[#F7F8F5]'
-                    : 'bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90'
-                }`}
-              >
-                Login
-              </Button>
-            </Link>
-          </div>
-        </div>
+    <div className="landing">
+      <header className="site-header wrap">
+        <BrandLogo />
+        <nav aria-label="Main navigation"><a href="#features">The little details</a><a href="#how-it-works">How it works</a></nav>
+        <Link href="/login" className="header-login">Sign in <ArrowUpRight size={16} /></Link>
       </header>
-
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#F7F8F5] to-[#E8F8F7] py-20 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
-              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#071936] leading-tight mb-6">
-                Master Your Bills,{' '}
-                <span className="bg-gradient-to-r from-[#078D88] to-[#19C4B6] bg-clip-text text-transparent">
-                  Multiply Your Peace
-                </span>
-              </h1>
-              <p className="text-lg text-[#4B5D7A] mb-8 max-w-xl mx-auto lg:mx-0">
-                Stop juggling due dates and overdue notices. PocketMATE brings all your bills together in one smart, intuitive dashboard.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link href="/login">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full sm:w-auto border-2 border-[#078D88] text-[#078D88] hover:bg-[#F0FAF4] px-8"
-                  >
-                    Login
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <div className="relative">
-              <img
-                src="/images/mascot-bill.png"
-                alt="PocketMATE Mascot"
-                className="w-full max-w-md mx-auto"
-              />
-            </div>
+      <main>
+        <section className="hero wrap">
+          <div className="hero-copy">
+            <p className="eyebrow"><span className="status-dot" /> A LITTLE ORDER. A LOT OF PEACE.</p>
+            <h1>Your bills, sorted.<br />Your mind, clearer.</h1>
+            <p className="hero-description">Bills, cards, and all those little due dates.<br className="hidden sm:block" /> Give them a home. Get some headspace back.</p>
+            <Link href="/login" className="primary-link">Find your financial calm <ArrowUpRight size={19} /></Link>
+            <p className="hero-note">Your everyday money companion.</p>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#071936] mb-4">
-              Everything You Need to{' '}
-              <span className="bg-gradient-to-r from-[#078D88] to-[#19C4B6] bg-clip-text text-transparent">
-                Stay Organized
-              </span>
-            </h2>
-            <p className="text-lg text-[#4B5D7A] max-w-2xl mx-auto">
-              Powerful features designed to make bill management effortless
-            </p>
+          <div className="hero-art">
+            <div className="preview-note"><span className="small-check"><Check size={14} /></span> A little more together.</div>
+            <div className="receipt-preview">
+              <div className="preview-heading"><span>YOUR MONTH, AT A GLANCE</span><Receipt size={17} /></div>
+              <div className="preview-total">Room to breathe.</div><p>One place for everything coming up.</p>
+              <div className="preview-row"><span><span className="preview-icon"><Receipt size={16} /></span> Electricity</span><span className="sample-tag">Tracked</span></div>
+              <div className="preview-row"><span><span className="preview-icon"><CreditCard size={16} /></span> Credit card</span><span className="sample-tag">Organized</span></div>
+              <div className="preview-row"><span><span className="preview-icon"><Bell size={16} /></span> Internet</span><span className="sample-tag">Remembered</span></div>
+              <div className="preview-footer">A glimpse of a calmer routine <span>?</span></div>
+            </div>
+            <Mascot className="hero-mascot" />
           </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-[#F7F8F5] rounded-2xl p-8 border border-[#D5ECEB] hover:shadow-lg transition-shadow">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#078D88] to-[#19C4B6] rounded-xl flex items-center justify-center mb-6">
-                <Receipt className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-[#071936] mb-3">Bill Tracking</h3>
-              <p className="text-[#4B5D7A]">
-                Keep all your bills in one place. Never miss a payment with automatic due date tracking.
-              </p>
-            </div>
-
-            <div className="bg-[#F7F8F5] rounded-2xl p-8 border border-[#D5ECEB] hover:shadow-lg transition-shadow">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#078D88] to-[#19C4B6] rounded-xl flex items-center justify-center mb-6">
-                <BellRing className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-[#071936] mb-3">Smart Reminders</h3>
-              <p className="text-[#4B5D7A]">
-                Get timely notifications before due dates. Customize reminders to fit your schedule.
-              </p>
-            </div>
-
-            <div className="bg-[#F7F8F5] rounded-2xl p-8 border border-[#D5ECEB] hover:shadow-lg transition-shadow">
-              <div className="w-14 h-14 bg-gradient-to-br from-[#078D88] to-[#19C4B6] rounded-xl flex items-center justify-center mb-6">
-                <TrendingUp className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-[#071936] mb-3">Budget Insights</h3>
-              <p className="text-[#4B5D7A]">
-                Visualize your spending patterns and stay on top of your monthly expenses.
-              </p>
-            </div>
+        </section>
+        <div className="manifesto-strip"><div className="wrap"><span>A place for your bills.</span><span>?</span><span>A plan for your payments.</span><span>?</span><span>A little peace of mind.</span></div></div>
+        <section id="features" className="features-section wrap">
+          <div className="section-intro"><p className="eyebrow">THOUGHTFULLY SIMPLE</p><h2>Small details.<br /><em>Big exhale.</em></h2><p>No more piecing it all together.<br />Just a clear view of what needs you.</p></div>
+          <div className="feature-list">
+            {[
+              { number: '01', icon: Receipt, title: 'Every bill, in its place.', text: 'Keep amounts, providers, and due dates together. See what?s paid and what?s still ahead.' },
+              { number: '02', icon: CreditCard, title: 'Your cards. The full picture.', text: 'Bring balances, credit limits, and payment dates into one easy-to-follow view.' },
+              { number: '03', icon: Bell, title: 'Make room for remembering.', text: 'Set up reminders around your bills, so the little things have a place on your list.' },
+            ].map(({ number, icon: Icon, title, text }) => <article className="feature-row" key={number}><span className="feature-number">{number}</span><div><h3>{title}</h3><p>{text}</p></div><Icon size={23} strokeWidth={1.4} /></article>)}
           </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 bg-[#F7F8F5]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#071936] mb-4">
-              How It Works
-            </h2>
-            <p className="text-lg text-[#4B5D7A]">
-              Get started in minutes, not hours
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#078D88] to-[#19C4B6] rounded-full flex items-center justify-center mx-auto mb-6">
-                <Plus className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-[#071936] mb-3">Add Your Bills</h3>
-              <p className="text-[#4B5D7A]">
-                Enter your bills once. We will track everything for you automatically.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#078D88] to-[#19C4B6] rounded-full flex items-center justify-center mx-auto mb-6">
-                <Bell className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-[#071936] mb-3">Set Reminders</h3>
-              <p className="text-[#4B5D7A]">
-                Choose when to be reminded. Get alerts via browser notifications.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#078D88] to-[#19C4B6] rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-[#071936] mb-3">Stay On Top</h3>
-              <p className="text-[#4B5D7A]">
-                Never pay late fees again. Manage bills from any device, anywhere.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-[#071936] mb-4">
-            Ready to Take Control?
-          </h2>
-          <p className="text-lg text-[#4B5D7A] mb-8">
-            Join thousands of users who have simplified their bill management.
-          </p>
-          <Link href="/login">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-[#078D88] to-[#19C4B6] text-white hover:opacity-90 px-8"
-            >
-              Login
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-[#071936] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <img src="/images/logo.png" alt="PocketMATE Logo" className="h-8 w-auto brightness-0 invert" />
-              <span className="text-lg font-bold text-white">
-                PocketMATE
-              </span>
-            </div>
-            <p className="text-sm text-gray-400">
-              Your Personal Bill Management Assistant
-            </p>
-            <p className="text-sm text-gray-400">
-              © 2026 PocketMATE. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+        </section>
+        <section id="how-it-works" className="ritual-section wrap">
+          <div className="ritual-heading"><p className="eyebrow">YOUR NEW FIVE-MINUTE RITUAL</p><h2>A fresh start.<br />Three small steps.</h2><Link href="/login" className="text-link">Let?s get you settled <ArrowRight size={18} /></Link></div>
+          <div className="ritual-steps">{[['01', 'Bring it all in', 'Add your bills and credit cards. Give every due date a home.'], ['02', 'Find your rhythm', 'Set your reminders and check what?s coming up.'], ['03', 'Carry on, lighter', 'Mark bills as paid and watch your to-do list get smaller.']].map(([n, title, text]) => <article key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div>
+        </section>
+        <section className="closing wrap"><Mascot /><div><p className="eyebrow">YOU?VE GOT THIS. WE?VE GOT THE DETAILS.</p><h2>Make a little space<br />for peace of mind.</h2></div><Link href="/login" className="primary-link">Meet your PocketMATE <ArrowUpRight size={18} /></Link></section>
+      </main>
+      <footer className="site-footer wrap"><BrandLogo /><p>A little more organized. A little more you.</p><span>? {new Date().getFullYear()} PocketMATE</span></footer>
     </div>
   );
 }

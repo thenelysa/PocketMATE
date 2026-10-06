@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { X } from 'lucide-react';
-import { Button } from '@/components/ui';
+import { Button, DatePicker } from '@/components/ui';
 import { useCreateBill, useUpdateBill } from '../hooks';
 import type { Bill } from '../types';
 
@@ -11,8 +11,8 @@ const CATEGORIES = ['Utilities', 'Insurance', 'Subscription', 'Rent', 'Phone', '
 const RECURRENCES = ['One-time', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
 
 const inputClass =
-  'w-full px-4 py-2 border border-[#D5ECEB] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#078D88]';
-const labelClass = 'block text-sm font-semibold text-[#071936] mb-1';
+  'w-full px-4 py-2 border border-line rounded-xl focus:outline-none focus:ring-2 focus:ring-teal';
+const labelClass = 'block text-sm font-semibold text-ink mb-1';
 
 function initialValues(bill: Bill | null) {
   if (!bill) {
@@ -36,7 +36,7 @@ function initialValues(bill: Bill | null) {
 
 /**
  * Create/edit modal. Pass `bill` to edit, `null` to create.
- * Mount it only while open — the form seeds its state from `bill` once, on mount.
+ * Mount it only while open â€” the form seeds its state from `bill` once, on mount.
  */
 export function BillForm({ bill, onClose }: { bill: Bill | null; onClose: () => void }) {
   const createBill = useCreateBill();
@@ -77,11 +77,11 @@ export function BillForm({ bill, onClose }: { bill: Bill | null; onClose: () => 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b border-[#D5ECEB]">
-          <h3 className="text-lg font-bold text-[#071936]">
+        <div className="flex items-center justify-between p-6 border-b border-line">
+          <h3 className="text-lg font-bold text-ink">
             {bill ? 'Edit Bill' : 'Add New Bill'}
           </h3>
-          <button onClick={onClose} className="text-[#4B5D7A] hover:text-[#071936]" aria-label="Close">
+          <button onClick={onClose} className="text-muted hover:text-ink" aria-label="Close">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -128,14 +128,7 @@ export function BillForm({ bill, onClose }: { bill: Bill | null; onClose: () => 
             </div>
             <div>
               <label htmlFor="bill-due" className={labelClass}>Due Date *</label>
-              <input
-                id="bill-due"
-                type="date"
-                required
-                value={values.dueDate}
-                onChange={e => setValues({ ...values, dueDate: e.target.value })}
-                className={inputClass}
-              />
+              <DatePicker id="bill-due" label="Due date" required value={values.dueDate} onChange={date => setValues({ ...values, dueDate: date })} />
             </div>
           </div>
 
@@ -184,9 +177,9 @@ export function BillForm({ bill, onClose }: { bill: Bill | null; onClose: () => 
               id="bill-business"
               checked={values.isBusiness ?? false}
               onChange={e => setValues({ ...values, isBusiness: e.target.checked })}
-              className="w-4 h-4 text-[#078D88] border-[#D5ECEB] rounded focus:ring-[#078D88]"
+              className="w-4 h-4 text-teal border-line rounded focus:ring-teal"
             />
-            <label htmlFor="bill-business" className="text-sm text-[#071936]">Business expense</label>
+            <label htmlFor="bill-business" className="text-sm text-ink">Business expense</label>
           </div>
 
           <div className="flex gap-3 pt-4">

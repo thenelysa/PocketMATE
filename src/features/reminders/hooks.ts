@@ -2,7 +2,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/features/auth/auth-context';
-import { apiGet, apiPost, apiDelete } from '@/lib/api-client';
+import { apiGet, apiPost, apiPut, apiDelete } from '@/lib/api-client';
 import type { Reminder, ReminderInput } from './types';
 
 const remindersKey = (userId?: string) => ['reminders', userId] as const;
@@ -13,6 +13,7 @@ export function useReminders() {
     queryKey: remindersKey(user?.sub),
     queryFn: () => apiGet<Reminder[]>(`/api/reminders?userId=${user!.sub}`),
     enabled: !!user?.sub,
+    refetchInterval: 15000,
   });
 }
 
@@ -31,6 +32,15 @@ export function useDeleteReminder() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => apiDelete<{ id: string }>(`/api/reminders?id=${id}`),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: remindersKey(user?.sub) }),
+  });
+}
+
+export function useDismissReminder() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => apiPut<Reminder>('/api/reminders', { id, userId: user!.sub }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: remindersKey(user?.sub) }),
   });
 }

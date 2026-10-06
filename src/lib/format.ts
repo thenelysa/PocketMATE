@@ -1,7 +1,15 @@
 /** Display formatting. Pure functions — no React, no domain knowledge. */
 
-/** `84.2` -> `"$84.20"`. Accepts a string because JSON numbers may arrive as one. */
-export const money = (value: number | string) => `$${Number(value).toFixed(2)}`;
+const currencySymbols: Record<string, string> = {
+  USD: '$',
+  NPR: 'रू',
+};
+
+/** `84.2` -> `"$84.20"` or `"रू 84.20"` depending on currency. Accepts a string because JSON numbers may arrive as one. */
+export const money = (value: number | string, currency = 'USD') => {
+  const symbol = currencySymbols[currency] || '$';
+  return `${symbol}${Number(value).toFixed(2)}`;
+};
 
 /**
  * Day of month as an ordinal: 1st, 2nd, 3rd, 4th …

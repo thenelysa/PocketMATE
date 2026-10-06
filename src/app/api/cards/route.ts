@@ -1,8 +1,9 @@
+import { requireUser } from '@/lib/session';
 import { prisma } from '@/lib/db';
 import { ok, route, requireParam, requireField } from '@/lib/api';
 
 export const GET = route('cards.GET', async (request: Request) => {
-  const userId = requireParam(request, 'userId');
+  const userId = await requireUser(request);
   const cards = await prisma.creditCard.findMany({
     where: { userId },
     orderBy: { bankName: 'asc' },
@@ -11,10 +12,11 @@ export const GET = route('cards.GET', async (request: Request) => {
 });
 
 export const POST = route('cards.POST', async (request: Request) => {
+  const userId = await requireUser(request);
   const body = await request.json();
   const card = await prisma.creditCard.create({
     data: {
-      userId: requireField<string>(body, 'userId'),
+      userId,
       bankName: requireField<string>(body, 'bankName'),
       creditLimit: requireField<number>(body, 'creditLimit'),
       cardName: body.cardName ?? null,
@@ -31,7 +33,8 @@ export const POST = route('cards.POST', async (request: Request) => {
 });
 
 export const DELETE = route('cards.DELETE', async (request: Request) => {
+  const userId = await requireUser(request);
   const id = requireParam(request, 'id');
-  const deleted = await prisma.creditCard.delete({ where: { id }, select: { id: true } });
+  const deleted = await prisma.creditCard.delete({ where: { id, userId }, select: { id: true } });
   return ok(deleted);
 });

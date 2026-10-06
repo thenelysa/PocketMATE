@@ -7,11 +7,12 @@ four verbs.
 ## The shape every handler follows
 
 ```ts
+import { requireUser } from '@/lib/session';
 import { prisma } from '@/lib/db';
 import { ok, route, requireParam, requireField } from '@/lib/api';
 
 export const GET = route('budgets.GET', async (request: Request) => {
-  const userId = requireParam(request, 'userId');
+  const userId = await requireUser(request);
   const budgets = await prisma.budget.findMany({ where: { userId } });
   return ok(budgets);
 });
@@ -53,15 +54,12 @@ Prisma leaves a column untouched when its value is `undefined`, so omitting a
 field from the body is a real partial update — no `COALESCE`. A field sent as
 `null` still clears the column; keep that distinction intact.
 
-## ⚠️ Current security hole
+## Authentication and ownership
 
-These handlers trust the `userId` they are given. `GET /api/bills?userId=<any
-sub>` returns that person's bills, and the Google token is decoded client-side
-without verification.
-
-The fix: verify the credential in `POST /api/auth` (`google-auth-library`'s
-`verifyIdToken`), set an httpOnly cookie, derive `userId` from that cookie in
-every handler, and delete the `userId` parameter. See `docs/ARCHITECTURE.md`.
-
-Until then, do not add endpoints exposing anything more sensitive than what is
-already here.
+Every private handler calls `await requireUser(request)` from `@/lib/session`.
+The returned user id is the only authority for reads and writes. Include it in
+Prisma filters, including update/delete filters. Ignore client-supplied user ids.
+Google access tokens are verified for audience and expiry on the server;
+random session tokens live in httpOnly cookies, with only their hash in Postgres.
+Household endpoints additionally verify membership and payer/owner permissions.
+See `docs/MONEY-STUDIO.md` for migration and verification steps.

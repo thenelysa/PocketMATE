@@ -27,8 +27,79 @@ model User {
   cards         CreditCard[]
   reminders     Reminder[]
   profiles      UserProfile[]
+  sessions      Session[]
+  studioPlan    StudioPlan?
+  memberships   HouseholdMember[]
 
   @@map("users")
+}
+
+model Session {
+  tokenHash String @id @map("token_hash")
+  userId String @map("user_id") @db.VarChar(255)
+  expiresAt DateTime @map("expires_at")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+  @@map("sessions")
+}
+
+model StudioPlan {
+  userId String @id @map("user_id") @db.VarChar(255)
+  balance Decimal @default(0) @db.Decimal(12, 2)
+  balanceDate DateTime @default(now()) @map("balance_date")
+  income Decimal @default(0) @db.Decimal(12, 2)
+  nextPayday DateTime? @map("next_payday")
+  cadence Int @default(30)
+  reserve Decimal @default(0) @db.Decimal(12, 2)
+  dailySpending Decimal @default(0) @map("daily_spending") @db.Decimal(12, 2)
+  transactions Json @default("[]")
+  version Int @default(0)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("studio_plans")
+}
+
+model Household {
+  id String @id @default(uuid())
+  name String @db.VarChar(80)
+  inviteHash String? @unique @map("invite_hash")
+  inviteExpiresAt DateTime? @map("invite_expires_at")
+  members HouseholdMember[]
+  expenses HouseholdExpense[]
+  @@map("households")
+}
+
+model HouseholdMember {
+  householdId String @map("household_id")
+  userId String @map("user_id") @db.VarChar(255)
+  role String @default("member")
+  household Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@id([householdId, userId])
+  @@map("household_members")
+}
+
+model HouseholdExpense {
+  id String @id @default(uuid())
+  householdId String @map("household_id")
+  name String @db.VarChar(120)
+  amount Decimal @db.Decimal(12, 2)
+  dueDate DateTime @map("due_date")
+  payerId String @map("payer_id") @db.VarChar(255)
+  paid Boolean @default(false)
+  household Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  shares HouseholdShare[]
+  @@index([householdId])
+  @@map("household_expenses")
+}
+
+model HouseholdShare {
+  expenseId String @map("expense_id")
+  userId String @map("user_id") @db.VarChar(255)
+  amount Decimal @db.Decimal(12, 2)
+  settled Boolean @default(false)
+  expense HouseholdExpense @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  @@id([expenseId, userId])
+  @@map("household_shares")
 }
 
 model Bill {

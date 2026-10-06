@@ -33,3 +33,7 @@ npm-debug.log*
 
 # Agent tooling scratch
 .omc/
+
+# Generated OCR runtime assets
+/public/ocr/
+/.next-studio/

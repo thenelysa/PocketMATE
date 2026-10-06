@@ -91,42 +91,19 @@ Three invariants hold across every feature:
 
 ## Auth
 
-```
-Google Identity Services
-   │  credential (a JWT)
-   ▼
-login page decodes the payload client-side  ──POST──▶  /api/auth  (upsert users row)
-   │
-   ▼
-AuthProvider.login(user)  →  React state + localStorage['pocketmate_user']
-   │
-   ▼
-useAuth() anywhere;  (dashboard)/layout.tsx gates on it
-```
+The custom Google button obtains an access token. `POST /api/auth` verifies it
+with Google's token info endpoint (audience and expiry), fetches the verified
+profile server-side, upserts the user, and sets a seven-day httpOnly session cookie.
+Only a SHA-256 token hash is stored in the `sessions` table. Sign-out revokes it.
 
-`user.sub` — the Google subject id — is the primary key used as `user_id` on every
-row.
+`AuthProvider` hydrates from `GET /api/auth`. The localStorage profile is only
+an optional display cache; it never grants access. Every private API calls
+`requireUser(request)` and filters writes by owner. Household operations also
+check membership, owner, and payer permissions. Mutations reject cross-origin
+requests. The layout's loading guard remains necessary during session loading.
 
-### Known security limitation — fix before this goes live
-
-The Google ID token is **decoded in the browser and never verified on the server**,
-and `/api/*` routes trust whatever `userId` is passed in the query string. Both
-mean any client can read or write any user's rows:
-
-```
-GET /api/bills?userId=<someone-elses-google-sub>   → returns their bills
-```
-
-The fix is the same one change in two halves:
-
-1. In `POST /api/auth`, verify the raw credential server-side (`google-auth-library`'s
-   `verifyIdToken`) and set an httpOnly session cookie instead of trusting the
-   decoded payload.
-2. Derive `userId` in each route handler **from that cookie**, and delete the
-   `userId` query parameter and the `userId` in mutation bodies entirely.
-
-Until then, treat this as a local development app. Do not put real financial data
-in it.
+The session table and other Money Studio tables must be migrated before this
+version is activated. See [Money Studio](MONEY-STUDIO.md).
 
 ## Database
 

@@ -31,7 +31,12 @@ export function useUpdateBill() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (bill: Partial<BillInput> & { id: string }) => apiPut<Bill>('/api/bills', bill),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: billsKey(user?.sub) }),
+    onSuccess: (data, variables) => {
+      const previous = queryClient.getQueryData<Bill[]>(billsKey(user?.sub))?.find(item => item.id === data.id);
+      if (variables.status === 'PAID' && previous?.status !== 'PAID') window.dispatchEvent(new CustomEvent('pocketmate-paid', { detail: data }));
+      void queryClient.invalidateQueries({ queryKey: ['studio'] });
+      return queryClient.invalidateQueries({ queryKey: billsKey(user?.sub) });
+    },
   });
 }
 

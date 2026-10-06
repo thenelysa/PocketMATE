@@ -24,37 +24,19 @@ Prisma removes the whole class of bug.
 
 When you add a column, add the `@map`. That is the one rule.
 
-## ⚠️ There is no migration history yet
+## Migration baseline and activation
 
-`prisma/schema.prisma` was produced by `prisma db pull` **from the live Neon
-database**, not the other way round. `prisma/migrations/` is empty.
+`0_init` captures the existing introspected schema. The additive Money Studio
+migration creates six new tables without rewriting the original financial tables.
+Both have been applied and verified on the isolated `pocketmate-studio` branch.
+After explicit user approval, the baseline was verified and marked applied on production,
+and the additive migration was deployed successfully. See [Money Studio](MONEY-STUDIO.md).
 
-**Do not run `prisma migrate dev` or `prisma db push` against Neon.** Prisma
-would treat the schema as the desired state and rewrite the database to match —
-including dropping anything the schema does not describe.
-
-Before anyone can migrate safely, the database has to be baselined once:
-
-```bash
-mkdir -p prisma/migrations/0_init
-npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma \
-  --script > prisma/migrations/0_init/migration.sql
-npx prisma migrate resolve --applied 0_init      # marks it as already applied
-```
-
-After that, `npm run db:migrate` creates new migrations normally and
-`npm run db:deploy` applies them in CI.
-
-Until then, work against a local copy:
-
-```bash
-docker run -d --name pocketmate-pg -e POSTGRES_PASSWORD=devpw \
-  -e POSTGRES_DB=pocketmate -p 55432:5432 postgres:16
-DATABASE_URL=postgresql://postgres:devpw@localhost:55432/pocketmate npx prisma db push
-```
-
-A real `DATABASE_URL` in the environment always beats the `.env` files — that is
-what `prisma.config.ts` guarantees, so the command above is safe.
+On an existing database, first verify the baseline matches. Then mark `0_init`
+as applied with `prisma migrate resolve --applied 0_init`; never execute its CREATE
+statements against populated tables. `prisma migrate deploy` then applies the
+additive migration. Never use `db push` or destructive schema synchronization on
+production. New empty databases can apply the full migration chain.
 
 ## Everyday workflow
 

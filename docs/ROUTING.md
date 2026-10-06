@@ -133,12 +133,9 @@ useEffect(() => {
 }, [user, isLoading, router]);
 ```
 
-`isLoading` matters. The session lives in `localStorage`, which is only readable
-after mount, so there is one render where `user` is `null` but we do not yet know
-whether the visitor is signed out. Redirecting during that window would bounce
-signed-in users straight back to `/login`. The layout shows a spinner while
-`isLoading` is true.
+`isLoading` matters: `AuthProvider` verifies the session through `GET /api/auth`
+after mount. The layout shows a spinner until that request finishes. A cached
+localStorage profile does not authenticate a visitor.
 
-**This guard is client-side only.** It hides UI; it does not protect data. The
-`/api/*` routes trust the `userId` query parameter and will return another user's
-rows if asked. See the security note in `docs/ARCHITECTURE.md`.
+The layout guard controls presentation; APIs independently call `requireUser`
+and enforce ownership. See `docs/ARCHITECTURE.md` and `docs/MONEY-STUDIO.md`.

@@ -1,5 +1,7 @@
 'use client';
 
+import { getSession, signOut } from './hooks';
+import { useQueryClient } from '@tanstack/react-query';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface User {
@@ -12,7 +14,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   login: (userData: User) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
   isLoading: boolean;
 }
 
@@ -21,25 +23,14 @@ const STORAGE_KEY = 'pocketmate_user';
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // localStorage only exists after mount, so the stored session must be hydrated
-  // from an effect. Seeding it in the initial state instead would make the server
-  // HTML (always logged out) disagree with the client and blow up hydration.
-  // `isLoading` is what consumers wait on so they never flash the logged-out UI.
   useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect -- see note above */
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        setUser(JSON.parse(stored));
-      } catch {
-        localStorage.removeItem(STORAGE_KEY);
-      }
-    }
-    setIsLoading(false);
-    /* eslint-enable react-hooks/set-state-in-effect */
+    let active = true;
+    getSession().then(value => { if (active) setUser(value); }).catch(() => { localStorage.removeItem(STORAGE_KEY); }).finally(() => { if (active) setIsLoading(false); });
+    return () => { active = false; };
   }, []);
 
   const login = (userData: User) => {
@@ -47,7 +38,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await signOut();
+    queryClient.clear();
     setUser(null);
     localStorage.removeItem(STORAGE_KEY);
   };

@@ -1,10 +1,12 @@
 'use client';
 
+import { useCurrency } from '@/features/preferences/hooks';
 import { format } from 'date-fns';
 import { Receipt, Edit2, Trash2, Calendar, Check } from 'lucide-react';
+import { money } from '@/lib/format';
 import type { Bill } from '../types';
 
-const th = 'px-4 py-3 text-left text-sm font-semibold text-[#071936]';
+const th = 'px-4 py-3 text-left text-sm font-semibold text-ink';
 
 export function BillTable({
   bills,
@@ -17,11 +19,12 @@ export function BillTable({
   onDelete: (id: string) => void;
   onMarkPaid: (bill: Bill) => void;
 }) {
+  const currency = useCurrency();
   return (
-    <div className="bg-white rounded-2xl border border-[#D5ECEB] overflow-hidden">
+    <div className="bg-white rounded-2xl border border-line overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-[#F7F8F5] border-b border-[#D5ECEB]">
+          <thead className="bg-paper border-b border-line">
             <tr>
               <th className={th}>Bill</th>
               <th className={th}>Category</th>
@@ -31,22 +34,22 @@ export function BillTable({
               <th className={`${th} text-right`}>Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#D5ECEB]">
+          <tbody className="divide-y divide-line">
             {bills.map(bill => (
-              <tr key={bill.id} className="hover:bg-[#F7F8F5]/50">
+              <tr key={bill.id} className="hover:bg-paper/50">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#078D88] to-[#19C4B6] flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-lg bg-teal flex items-center justify-center">
                       <Receipt className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <p className="font-semibold text-[#071936]">{bill.name}</p>
-                      <p className="text-sm text-[#4B5D7A]">{bill.provider || 'No provider'}</p>
+                      <p className="font-semibold text-ink">{bill.name}</p>
+                      <p className="text-sm text-muted">{bill.provider || 'No provider'}</p>
                     </div>
                   </div>
                 </td>
-                <td className="px-4 py-3 text-sm text-[#4B5D7A]">{bill.category || '-'}</td>
-                <td className="px-4 py-3 text-sm text-[#4B5D7A]">
+                <td className="px-4 py-3 text-sm text-muted">{bill.category || '-'}</td>
+                <td className="px-4 py-3 text-sm text-muted">
                   <div className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
                     {format(new Date(bill.dueDate), 'MMM d, yyyy')}
@@ -63,8 +66,8 @@ export function BillTable({
                     {bill.status}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-right font-semibold text-[#071936]">
-                  ${Number(bill.amount).toFixed(2)}
+                <td className="px-4 py-3 text-right font-semibold text-ink">
+                  {money(bill.amount, currency)}
                 </td>
                 <td className="px-4 py-3 text-right">
                   <div className="flex items-center justify-end gap-2">
@@ -80,7 +83,7 @@ export function BillTable({
                     )}
                     <button
                       onClick={() => onEdit(bill)}
-                      className="p-2 text-[#4B5D7A] hover:bg-[#F7F8F5] rounded-lg"
+                      className="p-2 text-muted hover:bg-paper rounded-lg"
                       aria-label={`Edit ${bill.name}`}
                     >
                       <Edit2 className="w-4 h-4" />

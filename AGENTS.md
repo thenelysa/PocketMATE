@@ -27,7 +27,7 @@ which URLs exist.
 3. Those hooks call this app's own `/api/*` route handlers through
    `@/lib/api-client`.
 4. Handlers use the shared Prisma client from `src/lib/db.ts` against Postgres.
-5. Google OAuth → `users` row → `localStorage` via `src/features/auth/`.
+5. Verified Google OAuth creates a hashed session; an httpOnly cookie authenticates API calls.
 
 ## Where to look — by task
 
@@ -102,5 +102,16 @@ Inside a feature, use relative paths (`../hooks`, `./types`).
 - Every API handler goes through `route()` and `ok()` from `@/lib/api`; the
   response contract is in `docs/API.md`.
 - A `page.tsx` over ~120 lines means something belongs in `src/features/`.
-- Auth is **not** production-ready — `/api/*` trusts a `userId` query parameter,
-  so any client can read any user's rows. See `docs/ARCHITECTURE.md` § Auth.
+- Private APIs derive ownership from `requireUser(request)` in `src/lib/session.ts`.
+  Never trust a client-supplied `userId`. The session tables require the Money Studio
+  migration before activation; see `docs/MONEY-STUDIO.md`.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

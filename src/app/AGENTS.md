@@ -55,12 +55,10 @@ modal and table live in `src/features/bills/components/`; it was 342 before.
 
 `app/(dashboard)/layout.tsx` redirects to `/login` only when `!isLoading && !user`.
 
-The `isLoading` check is load-bearing: the session lives in `localStorage`,
-readable only after mount, so there is one render where `user` is `null` but we do
-not yet know the visitor is signed out. Dropping that check bounces signed-in
-users straight back to `/login`.
-
-The guard hides UI; it does not protect data.
+The `isLoading` check is load-bearing: the provider requests `GET /api/auth`
+after mounting and must finish session verification before redirecting. The
+httpOnly cookie and the server-side session authenticate requests; a localStorage
+profile does not. APIs enforce ownership independently through `requireUser`.
 
 ## Styling
 

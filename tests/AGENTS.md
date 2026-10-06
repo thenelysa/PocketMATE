@@ -23,14 +23,11 @@ resulting 404 screenshots were mistaken for an app bug. See `docs/ROUTING.md`.
 ## Writing a test
 
 - Get the real URL from the `npm run build` route table, not from the file path.
-- To test a signed-in screen, seed the session before navigation — there is no
-  login API to call:
-  ```ts
-  await context.addInitScript(
-    u => localStorage.setItem('pocketmate_user', JSON.stringify(u)),
-    { sub: 'demo-1', email: 'demo@example.com', name: 'Demo User', picture: '' },
-  );
-  ```
+- Mock `GET /api/auth` with `{ sub, email, name, picture }` to test signed-in UI,
+  then mock the domain APIs. A localStorage profile alone must not authenticate.
+  See `studio.spec.ts`. Real API integration uses temporary users and hashed
+  session tokens on an explicitly guarded isolated database branch; see
+  `studio-api.spec.ts`. Never seed production for tests.
 - Assert something that fails when the app breaks. `expect(url.includes('/bills')
   || url.includes('/login'))` passes in both directions and catches nothing —
   several existing tests are that weak and are worth tightening.
