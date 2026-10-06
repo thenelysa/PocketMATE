@@ -78,65 +78,65 @@ export default function ReportsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-[#071936]">Reports</h2>
-        <p className="text-[#4B5D7A] mt-1">Visualize your spending patterns</p>
+        <h2 className="text-2xl font-bold text-ink">Reports</h2>
+        <p className="text-muted mt-1">Visualize your spending patterns</p>
       </div>
 
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-l-4 border-l-[#078D88]">
+        <Card className="border-l-4 border-l-teal">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-[#4B5D7A]">Paid This Month</p>
-                <p className="text-2xl font-bold text-[#078D88]">{money(totalPaid, currency)}</p>
+                <p className="text-sm text-muted">Paid This Month</p>
+                <p className="text-2xl font-bold text-teal">{money(totalPaid, currency)}</p>
               </div>
-              <CheckCircle className="w-10 h-10 text-[#078D88]/20" />
+              <CheckCircle className="w-10 h-10 text-teal/20" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-[#8B1538]">
+        <Card className="border-l-4 border-l-danger">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-[#4B5D7A]">Due This Month</p>
-                <p className="text-2xl font-bold text-[#8B1538]">{money(totalUnpaid, currency)}</p>
+                <p className="text-sm text-muted">Due This Month</p>
+                <p className="text-2xl font-bold text-danger">{money(totalUnpaid, currency)}</p>
               </div>
-              <Clock className="w-10 h-10 text-[#8B1538]/20" />
+              <Clock className="w-10 h-10 text-danger/20" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-[#071936]">
+        <Card className="border-l-4 border-l-ink">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-[#4B5D7A]">Card Balance</p>
-                <p className="text-2xl font-bold text-[#071936]">{money(totalCardDebt, currency)}</p>
+                <p className="text-sm text-muted">Card Balance</p>
+                <p className="text-2xl font-bold text-ink">{money(totalCardDebt, currency)}</p>
               </div>
-              <CreditCard className="w-10 h-10 text-[#071936]/20" />
+              <CreditCard className="w-10 h-10 text-ink/20" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-[#19C4B6]">
+        <Card className="border-l-4 border-l-teal">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-[#4B5D7A]">Payment Rate</p>
-                <p className="text-2xl font-bold text-[#19C4B6]">{paymentRate}%</p>
+                <p className="text-sm text-muted">Payment Rate</p>
+                <p className="text-2xl font-bold text-teal">{paymentRate}%</p>
               </div>
-              <TrendingUp className="w-10 h-10 text-[#19C4B6]/20" />
+              <TrendingUp className="w-10 h-10 text-teal/20" />
             </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Monthly Overview Chart */}
-      <Card className="border-t-4 border-t-[#078D88]">
+      <Card className="border-t-4 border-t-teal">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-[#078D88]">
+          <CardTitle className="flex items-center gap-2 text-teal">
             <BarChart3 className="w-5 h-5" />
             Monthly Bill Amount
           </CardTitle>
@@ -145,12 +145,12 @@ export default function ReportsPage() {
           <div className="flex items-end justify-between gap-2 h-48">
             {months.map((month, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-2">
-                <span className="text-sm font-medium text-[#071936]">{money(month.amount, currency)}</span>
+                <span className="text-sm font-medium text-ink">{money(month.amount, currency)}</span>
                 <div
-                  className="w-full bg-gradient-to-t from-[#078D88] to-[#19C4B6] rounded-t-lg transition-all"
+                  className="w-full bg-gradient-to-t from-teal to-teal rounded-t-lg transition-all"
                   style={{ height: `${(month.amount / maxAmount) * 150}px` }}
                 />
-                <span className="text-xs text-[#4B5D7A]">{month.label}</span>
+                <span className="text-xs text-muted">{month.label}</span>
               </div>
             ))}
           </div>
@@ -160,9 +160,9 @@ export default function ReportsPage() {
       {/* Two Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Bill Status Breakdown */}
-        <Card className="border-t-4 border-t-[#071936]">
+        <Card className="border-t-4 border-t-ink">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#071936]">
+            <CardTitle className="flex items-center gap-2 text-ink">
               <PieChart className="w-5 h-5" />
               Bill Status
             </CardTitle>
@@ -177,7 +177,7 @@ export default function ReportsPage() {
                     cy="50"
                     r="40"
                     fill="none"
-                    stroke="#F7F8F5"
+                    stroke="var(--color-line)"
                     strokeWidth="20"
                   />
                   {bills.length > 0 && (
@@ -187,7 +187,7 @@ export default function ReportsPage() {
                         cy="50"
                         r="40"
                         fill="none"
-                        stroke="#078D88"
+                        stroke="var(--chart-line)"
                         strokeWidth="20"
                         strokeDasharray={`${(bills.filter(b => b.status === 'PAID').length / bills.length) * 251.2} 251.2`}
                       />
@@ -196,7 +196,7 @@ export default function ReportsPage() {
                         cy="50"
                         r="40"
                         fill="none"
-                        stroke="#8B1538"
+                        stroke="var(--color-danger)"
                         strokeWidth="20"
                         strokeDasharray={`${(bills.filter(b => b.status === 'UNPAID').length / bills.length) * 251.2} 251.2`}
                         strokeDashoffset={`-${(bills.filter(b => b.status === 'PAID').length / bills.length) * 251.2}`}
@@ -205,17 +205,17 @@ export default function ReportsPage() {
                   )}
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-lg font-bold text-[#071936]">{bills.length}</span>
+                  <span className="text-lg font-bold text-ink">{bills.length}</span>
                 </div>
               </div>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-[#078D88]" />
-                  <span className="text-sm text-[#4B5D7A]">Paid: {bills.filter(b => b.status === 'PAID').length}</span>
+                  <div className="w-3 h-3 rounded-full bg-teal" />
+                  <span className="text-sm text-muted">Paid: {bills.filter(b => b.status === 'PAID').length}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-[#8B1538]" />
-                  <span className="text-sm text-[#4B5D7A]">Unpaid: {bills.filter(b => b.status === 'UNPAID').length}</span>
+                  <div className="w-3 h-3 rounded-full bg-danger" />
+                  <span className="text-sm text-muted">Unpaid: {bills.filter(b => b.status === 'UNPAID').length}</span>
                 </div>
               </div>
             </div>
@@ -232,15 +232,15 @@ export default function ReportsPage() {
           </CardHeader>
           <CardContent className="space-y-3">
             {topProviders.length === 0 ? (
-              <p className="text-[#4B5D7A] text-center py-4">No bill data yet</p>
+              <p className="text-muted text-center py-4">No bill data yet</p>
             ) : (
               topProviders.map((provider, i) => (
                 <div key={i} className="space-y-1">
                   <div className="flex justify-between text-sm">
-                    <span className="font-medium text-[#071936]">{provider.name}</span>
-                    <span className="text-[#4B5D7A]">{money(provider.amount, currency)}</span>
+                    <span className="font-medium text-ink">{provider.name}</span>
+                    <span className="text-muted">{money(provider.amount, currency)}</span>
                   </div>
-                  <div className="h-2 bg-[#F7F8F5] rounded-full overflow-hidden">
+                  <div className="h-2 bg-paper rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#F59E0B] rounded-full"
                       style={{ width: `${(provider.amount / maxProviderAmount) * 100}%` }}
@@ -254,86 +254,86 @@ export default function ReportsPage() {
       </div>
 
       {/* Bill Breakdown */}
-      <Card className="border-t-4 border-t-[#078D88]">
+      <Card className="border-t-4 border-t-teal">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-[#078D88]">
+          <CardTitle className="flex items-center gap-2 text-teal">
             <DollarSign className="w-5 h-5" />
             Bill Summary
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div className="p-4 bg-[#F7F8F5] rounded-xl text-center">
-              <p className="text-2xl font-bold text-[#071936]">{bills.length}</p>
-              <p className="text-sm text-[#4B5D7A]">Total Bills</p>
+            <div className="p-4 bg-paper rounded-xl text-center">
+              <p className="text-2xl font-bold text-ink">{bills.length}</p>
+              <p className="text-sm text-muted">Total Bills</p>
             </div>
-            <div className="p-4 bg-[#F7F8F5] rounded-xl text-center">
-              <p className="text-2xl font-bold text-[#078D88]">{bills.filter(b => b.status === 'PAID').length}</p>
-              <p className="text-sm text-[#4B5D7A]">Paid</p>
+            <div className="p-4 bg-paper rounded-xl text-center">
+              <p className="text-2xl font-bold text-teal">{bills.filter(b => b.status === 'PAID').length}</p>
+              <p className="text-sm text-muted">Paid</p>
             </div>
-            <div className="p-4 bg-[#F7F8F5] rounded-xl text-center">
-              <p className="text-2xl font-bold text-[#8B1538]">{bills.filter(b => b.status === 'UNPAID').length}</p>
-              <p className="text-sm text-[#4B5D7A]">Unpaid</p>
+            <div className="p-4 bg-paper rounded-xl text-center">
+              <p className="text-2xl font-bold text-danger">{bills.filter(b => b.status === 'UNPAID').length}</p>
+              <p className="text-sm text-muted">Unpaid</p>
             </div>
-            <div className="p-4 bg-[#F7F8F5] rounded-xl text-center">
-              <p className="text-2xl font-bold text-[#071936]">{money(totalBillsAmount, currency)}</p>
-              <p className="text-sm text-[#4B5D7A]">Total</p>
+            <div className="p-4 bg-paper rounded-xl text-center">
+              <p className="text-2xl font-bold text-ink">{money(totalBillsAmount, currency)}</p>
+              <p className="text-sm text-muted">Total</p>
             </div>
-            <div className="p-4 bg-[#F7F8F5] rounded-xl text-center">
-              <p className="text-2xl font-bold text-[#19C4B6]">{money(totalPaidAll, currency)}</p>
-              <p className="text-sm text-[#4B5D7A]">Paid Total</p>
+            <div className="p-4 bg-paper rounded-xl text-center">
+              <p className="text-2xl font-bold text-teal">{money(totalPaidAll, currency)}</p>
+              <p className="text-sm text-muted">Paid Total</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Credit Card Summary */}
-      <Card className="border-t-4 border-t-[#071936]">
+      <Card className="border-t-4 border-t-ink">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-[#071936]">
+          <CardTitle className="flex items-center gap-2 text-ink">
             <CreditCard className="w-5 h-5" />
             Credit Card Summary
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {cards.length === 0 ? (
-            <p className="text-[#4B5D7A] text-center py-8">No credit cards added yet</p>
+            <p className="text-muted text-center py-8">No credit cards added yet</p>
           ) : (
             <>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="p-4 bg-[#F7F8F5] rounded-xl text-center">
-                  <p className="text-2xl font-bold text-[#071936]">{cards.length}</p>
-                  <p className="text-sm text-[#4B5D7A]">Cards</p>
+                <div className="p-4 bg-paper rounded-xl text-center">
+                  <p className="text-2xl font-bold text-ink">{cards.length}</p>
+                  <p className="text-sm text-muted">Cards</p>
                 </div>
-                <div className="p-4 bg-[#F7F8F5] rounded-xl text-center">
-                  <p className="text-2xl font-bold text-[#071936]">{money(totalCardDebt, currency)}</p>
-                  <p className="text-sm text-[#4B5D7A]">Balance</p>
+                <div className="p-4 bg-paper rounded-xl text-center">
+                  <p className="text-2xl font-bold text-ink">{money(totalCardDebt, currency)}</p>
+                  <p className="text-sm text-muted">Balance</p>
                 </div>
-                <div className="p-4 bg-[#F7F8F5] rounded-xl text-center">
-                  <p className="text-2xl font-bold text-[#071936]">{money(totalCreditLimit, currency)}</p>
-                  <p className="text-sm text-[#4B5D7A]">Limit</p>
+                <div className="p-4 bg-paper rounded-xl text-center">
+                  <p className="text-2xl font-bold text-ink">{money(totalCreditLimit, currency)}</p>
+                  <p className="text-sm text-muted">Limit</p>
                 </div>
-                <div className="p-4 bg-[#F7F8F5] rounded-xl text-center">
+                <div className="p-4 bg-paper rounded-xl text-center">
                   <p className="text-2xl font-bold text-[#F59E0B]">
                     {totalCreditLimit > 0 ? Math.round((totalCardDebt / totalCreditLimit) * 100) : 0}%
                   </p>
-                  <p className="text-sm text-[#4B5D7A]">Utilization</p>
+                  <p className="text-sm text-muted">Utilization</p>
                 </div>
               </div>
               {/* Credit utilization bar */}
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="font-medium text-[#071936]">Credit Utilization</span>
-                  <span className="text-[#4B5D7A]">
+                  <span className="font-medium text-ink">Credit Utilization</span>
+                  <span className="text-muted">
                     {money(totalCardDebt, currency)} / {money(totalCreditLimit, currency)}
                   </span>
                 </div>
-                <div className="h-4 bg-[#F7F8F5] rounded-full overflow-hidden">
+                <div className="h-4 bg-paper rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all ${
-                      (totalCardDebt / totalCreditLimit) > 0.8 ? 'bg-[#8B1538]' :
+                      (totalCardDebt / totalCreditLimit) > 0.8 ? 'bg-danger' :
                       (totalCardDebt / totalCreditLimit) > 0.5 ? 'bg-[#F59E0B]' :
-                      'bg-[#078D88]'
+                      'bg-teal'
                     }`}
                     style={{ width: `${Math.min((totalCardDebt / totalCreditLimit) * 100, 100)}%` }}
                   />

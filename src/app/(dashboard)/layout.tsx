@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { ThemePicker } from '@/components/theme-picker';
 import { BrandLogo } from '@/components/brand-logo';
 import { useAuth } from '@/features/auth/auth-context';
 import {
@@ -164,7 +165,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
             </button>
             <p className="text-xs text-muted hidden lg:block">Your workspace <span className="mx-3 text-line">/</span><span className="text-ink">{getPageTitle()}</span></p>
             <div className="flex items-center gap-4">
-              <CommandBar /><NotificationBell key={user.sub} />
+              <ThemePicker /><CommandBar /><NotificationBell key={user.sub} />
               {user.picture && user.picture !== 'null' ? (
                 <img
                   src={user.picture}

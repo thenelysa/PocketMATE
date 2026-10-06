@@ -5,6 +5,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useState, ReactNode } from 'react';
 import { AuthProvider } from '@/features/auth/auth-context';
 import { ToastContainer } from '@/components/ui/toast';
+import { ThemeProvider } from './theme-provider';
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
 
@@ -26,11 +27,11 @@ export function Providers({ children }: { children: ReactNode }) {
   );
 
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+    <ThemeProvider><GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>{children}</AuthProvider>
         <ToastContainer />
       </QueryClientProvider>
-    </GoogleOAuthProvider>
+    </GoogleOAuthProvider></ThemeProvider>
   );
 }

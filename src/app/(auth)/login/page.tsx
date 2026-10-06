@@ -6,6 +6,7 @@ import { useAuth } from '@/features/auth/auth-context';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { ThemePicker } from '@/components/theme-picker';
 import { BrandLogo } from '@/components/brand-logo';
 import { Mascot } from '@/components/mascot';
 import { ArrowLeft, Loader2 } from 'lucide-react';
@@ -40,7 +41,7 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="site-header wrap"><BrandLogo /><Link href="/" className="text-link !mt-0"><ArrowLeft size={15} /> Back home</Link></header>
+      <header className="site-header wrap"><BrandLogo /><div className="header-actions"><ThemePicker /><Link href="/" className="text-link !mt-0"><ArrowLeft size={15} /> Back home</Link></div></header>
       <main className="flex-1 flex items-center justify-center py-12">
         <div className="login-layout">
           <section className="login-story"><p className="eyebrow">A LITTLE LESS ON YOUR MIND</p><h2>Come on in.<br />Get a little<br />more together.</h2><Mascot /></section>

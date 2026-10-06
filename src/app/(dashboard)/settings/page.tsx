@@ -1,5 +1,6 @@
 'use client';
 
+import { ThemePicker } from '@/components/theme-picker';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/features/auth/auth-context';
@@ -53,6 +54,8 @@ export default function SettingsPage() {
         <p className="text-muted mt-1">Manage your account and preferences</p>
       </div>
 
+      <ThemePicker expanded />
+
       {/* Profile Section */}
       <Card className="border-l-4 border-l-line opacity-60">
         <CardHeader>
@@ -67,7 +70,7 @@ export default function SettingsPage() {
             <input
               type="text"
               defaultValue={user?.name || ''}
-              className="mt-1 w-full px-4 py-2 rounded-xl border border-line bg-[#F7F8F5] text-muted focus:outline-none cursor-not-allowed"
+              className="mt-1 w-full px-4 py-2 rounded-xl border border-line bg-paper text-muted focus:outline-none cursor-not-allowed"
               readOnly
             />
           </div>
@@ -76,7 +79,7 @@ export default function SettingsPage() {
             <input
               type="email"
               defaultValue={user?.email || ''}
-              className="mt-1 w-full px-4 py-2 rounded-xl border border-line bg-[#F7F8F5] text-muted focus:outline-none cursor-not-allowed"
+              className="mt-1 w-full px-4 py-2 rounded-xl border border-line bg-paper text-muted focus:outline-none cursor-not-allowed"
               readOnly
             />
           </div>
@@ -137,9 +140,9 @@ export default function SettingsPage() {
       </Card>
 
       {/* Currency Section */}
-      <Card className="border-l-4 border-l-[#078D88]">
+      <Card className="border-l-4 border-l-teal">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-[#078D88]">
+          <CardTitle className="flex items-center gap-2 text-teal">
             <DollarSign className="w-5 h-5" />
             Currency
           </CardTitle>
@@ -151,8 +154,8 @@ export default function SettingsPage() {
               onClick={() => setCurrency('USD')}
               className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all ${
                 currency === 'USD'
-                  ? 'border-[#078D88] bg-[#F7F8F5] text-ink'
-                  : 'border-line hover:border-[#078D88]/50'
+                  ? 'border-teal bg-paper text-ink'
+                  : 'border-line hover:border-teal/50'
               }`}
             >
               <span className="text-lg font-bold">$</span>
@@ -162,8 +165,8 @@ export default function SettingsPage() {
               onClick={() => setCurrency('NPR')}
               className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all ${
                 currency === 'NPR'
-                  ? 'border-[#078D88] bg-[#F7F8F5] text-ink'
-                  : 'border-line hover:border-[#078D88]/50'
+                  ? 'border-teal bg-paper text-ink'
+                  : 'border-line hover:border-teal/50'
               }`}
             >
               <span className="text-lg font-bold">रू</span>

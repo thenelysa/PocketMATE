@@ -28,7 +28,7 @@ export function Toast({ message, undoLabel = 'Undo', onUndo, onDismiss, duration
 
   return (
     <div
-      className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 bg-[#071936] text-white rounded-xl shadow-2xl transition-all duration-300 ${
+      className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 bg-ink text-white rounded-xl shadow-2xl transition-all duration-300 ${
         visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
       }`}
     >
